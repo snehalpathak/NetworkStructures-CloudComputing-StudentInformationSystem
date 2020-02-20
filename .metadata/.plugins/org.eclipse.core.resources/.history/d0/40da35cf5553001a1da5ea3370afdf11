@@ -1,0 +1,51 @@
+package com.cyse6225.spring2020.courseservice.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import com.cyse6225.spring2020.courseservice.datamodel.InMemoryDatabase;
+import com.cyse6225.spring2020.courseservice.datamodel.Lecture;
+
+public class LectureService {
+
+	private static HashMap<String, Lecture> lectureMap = InMemoryDatabase.getLectureDB();
+	private static LectureService instance;
+
+	public static LectureService getInstance() {
+		if (instance == null) {
+			instance = new LectureService();
+		}
+		return instance;
+	}
+
+	// add
+	public void addLecture(Lecture lect) {
+		lectureMap.put(lect.getLectureId(),
+				new Lecture(lect.getLectureId(), lect.getClassroom(), lect.getAssignments(), lect.getAssignments()));
+	}
+	
+	// delete
+	public Lecture deleteLecture(String lectId) {
+		Lecture oldLect = lectureMap.get(lectId);
+		lectureMap.remove(lectId);
+		return oldLect;
+	}
+	
+	// update
+	public Lecture updateLecture(String lectId, Lecture lect) {
+		if(lectureMap.containsKey(lectId)) {
+			lectureMap.put(lectId, lect);
+		}
+		return lect;
+	}
+	
+	// get
+	public List<Lecture> getAllLecture(){
+		List<Lecture> lectList = new ArrayList<Lecture>();
+		for(Lecture lect : lectureMap.values()) {
+			lectList.add(lect);
+		}
+		return lectList;
+	}
+}

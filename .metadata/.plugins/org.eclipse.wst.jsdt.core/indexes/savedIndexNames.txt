@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+C:\Users\patha\OneDrive\Documents\sem2\NS&CC\cc_workspace\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1874143766.index
+1705499113.index
+3980753778.index
+3074551536.index
+1559723493.index
+1859236621.index
+3690288571.index

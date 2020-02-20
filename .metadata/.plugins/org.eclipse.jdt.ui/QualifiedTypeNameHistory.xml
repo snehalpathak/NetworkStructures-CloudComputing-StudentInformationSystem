@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.util.Map"/>
+    <fullyQualifiedTypeName name="com.cyse6225.spring2020.courseservice.datamodel.Program"/>
+    <fullyQualifiedTypeName name="javax.ws.rs.core.GenericEntity"/>
+    <fullyQualifiedTypeName name="javax.ws.rs.core.Response"/>
+    <fullyQualifiedTypeName name="com.cyse6225.spring2020.courseservice.datamodel.InMemoryDatabase"/>
+    <fullyQualifiedTypeName name="com.cyse6225.spring2020.courseservice.datamodel.CourseRegistration"/>
+    <fullyQualifiedTypeName name="java.util.Map.Entry"/>
+    <fullyQualifiedTypeName name="com.cyse6225.spring2020.courseservice.service.CourseRegistrationService"/>
+    <fullyQualifiedTypeName name="com.cyse6225.spring2020.courseservice.datamodel.Lecture"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="com.cyse6225.spring2020.courseservice.service.LectureService"/>
+    <fullyQualifiedTypeName name="com.cyse6225.spring2020.courseservice.datamodel.Professor"/>
+    <fullyQualifiedTypeName name="javax.ws.rs.Path"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.awt.PageAttributes.MediaType"/>
+    <fullyQualifiedTypeName name="javax.ws.rs.core.MediaType"/>
+    <fullyQualifiedTypeName name="com.cyse6225.spring2020.courseservice.datamodel.Student"/>
+    <fullyQualifiedTypeName name="com.cyse6225.spring2020.courseservice.service.StudentService"/>
+    <fullyQualifiedTypeName name="com.cyse6225.spring2020.courseservice.service.CourseService"/>
+    <fullyQualifiedTypeName name="com.cyse6225.spring2020.courseservice.datamodel.Course"/>
+</qualifiedTypeNameHistroy>

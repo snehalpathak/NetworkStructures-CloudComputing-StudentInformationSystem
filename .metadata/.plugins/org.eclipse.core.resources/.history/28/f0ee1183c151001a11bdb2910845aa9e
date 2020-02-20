@@ -1,0 +1,67 @@
+package com.cyse6225.spring2020.courseservice.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.cyse6225.spring2020.courseservice.datamodel.CourseRegistration;
+import com.cyse6225.spring2020.courseservice.datamodel.InMemoryDatabase;
+
+public class CourseRegistrationService {
+
+	private static List<CourseRegistration> courseRegstrList = InMemoryDatabase.getRegistrationDB();
+	private static CourseRegistrationService _instance;
+	
+	public static CourseRegistrationService getInstance() {
+		if(_instance == null) {
+			_instance = new CourseRegistrationService();
+		}
+		return _instance;
+	}
+	
+	// add course
+	public void registerCourse(String studentId, String courseId) {
+		CourseRegistration registerObj = new CourseRegistration(studentId, courseId);
+		courseRegstrList.add(registerObj);
+	}
+
+	// delete course
+	public void deregisterCourse(String studentId, String courseId) {
+		if(!studentId.isEmpty() && !courseId.isEmpty()) {
+			for(int count =0; count < courseRegstrList.size(); count++) {
+				if(courseRegstrList.get(count).getStudentId().equals(studentId) &&
+						courseRegstrList.get(count).getCourseId().equals(courseId)) {
+					
+					courseRegstrList.remove(count);
+				}
+			}
+		}
+	}
+	
+	// get student for course
+	public List<String> getStudentsEntrolledForCourse(String courseName){
+		String courseId = CourseService.getInstance().getIdbyCourseName(courseName);
+		
+		List<String> studentList = new ArrayList<String>();
+		
+		for(CourseRegistration course : courseRegstrList) {
+			if(course.getCourseId().equals(courseId)) {
+				studentList.add(course.getStudentId());
+			}
+		}		
+		return studentList;
+	}
+	
+	// get course for student
+	public List<String> getCourseListForStudent(String studentName){
+		String studentId = StudentService.getInstance().getIdbyStudentName(studentName);
+		
+		List<String> studentList = new ArrayList<String>();
+		
+		for(CourseRegistration course : courseRegstrList) {
+			if(course.getStudentId().equals(studentId)) {
+				studentList.add(course.getCourseId());
+			}
+		}		
+		return studentList;
+	}
+}

@@ -1,0 +1,5 @@
+package com.cyse6225.spring2020.courseservice.resources;
+
+public class ProgramResource {
+
+}

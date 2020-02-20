@@ -1,0 +1,10 @@
+package com.cyse6225.spring2020.courseservice.service;
+
+import java.util.HashMap;
+
+import com.cyse6225.spring2020.courseservice.datamodel.Lecture;
+
+public class LectureService {
+	public static HashMap<String, Lecture> lectureMap = new HashMap<String, Lecture>();
+
+}

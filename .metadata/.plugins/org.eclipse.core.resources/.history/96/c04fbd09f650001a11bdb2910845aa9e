@@ -1,0 +1,67 @@
+package com.cyse6225.spring2020.courseservice.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+
+import com.cyse6225.spring2020.courseservice.datamodel.InMemoryDatabase;
+import com.cyse6225.spring2020.courseservice.datamodel.Program;
+import com.cyse6225.spring2020.courseservice.datamodel.Student;
+
+public class StudentService {
+	
+	private static HashMap<String, Student> studentMap = InMemoryDatabase.getStudentDB();
+	private static StudentService _instance;
+	
+	public static StudentService getInstance() {
+		if(_instance == null) {
+			_instance = new StudentService();
+		}
+		return _instance;
+	}
+	
+	public void addStudent(String studentId, String firstName, String lastName,String email, Program program) {
+		Student newStudent = new Student(studentId, firstName, lastName, email, program);
+		studentMap.put(studentId, newStudent);
+	}
+	
+	public void deleteStudent(String studentId) {
+		studentMap.remove(studentId);
+	}
+	
+	public void registerForCourse(String studentId, String courseId) {
+		
+	}
+	
+	public Student getStudentById(String id) {
+		return studentMap.get(id);
+	}
+	
+	public List<Student> getStudentbyProgram(String programName) {
+		List<Student> studentList = new ArrayList<Student>();
+			for(Entry<String, Student> student : studentMap.entrySet()) {
+				if(student.getValue().getProgram().getProgramName() == programName) {
+					studentList.add(student.getValue());
+				}
+			}
+		
+		return studentList;
+	}
+	
+	public Student updateStudent(String id, Student student) {
+		studentMap.put(id, student);
+		Student modifiedStudent = studentMap.get(id);
+		return modifiedStudent;
+	}
+	
+	public List<String> getStudentFromCourse(String courseName){
+		List<String> studentName = new ArrayList<String>();
+		List<String> studentIdList = CourseRegistrationService.getInstance().getStudentsEntrolledForCourse(courseName);
+	
+		for(String id : studentIdList) {
+			studentName.add(studentMap.get(id).getFirstName() + studentMap.get(id).getLastName());
+		}
+	
+	}
+}

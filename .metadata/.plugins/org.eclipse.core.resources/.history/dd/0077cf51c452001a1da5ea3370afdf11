@@ -1,0 +1,42 @@
+package com.cyse6225.spring2020.courseservice.datamodel;
+
+public class Student {
+
+	private String studentId;
+	private String name;
+	private String email;
+	private String program;
+
+	public Student() {
+		
+	}
+	
+	public Student(String studentId, String name, String email, String program) {
+		this.studentId = studentId.trim();
+		this.name = name;
+		this.email = email;
+		this.program = program;
+	}
+
+	public String getStudentId() {
+		return studentId;
+	}	
+
+	public String getName() {
+		return name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getProgram() {
+		return program;
+	}
+
+	@Override
+	public String toString() {
+		return "studentId=" + studentId + ", name=" + name + ", email="
+				+ email + ", program=" + program;
+	}	
+}

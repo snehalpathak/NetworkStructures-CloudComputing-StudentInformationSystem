@@ -1,0 +1,47 @@
+package com.cyse6225.spring2020.courseservice.resources;
+
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import com.cyse6225.spring2020.courseservice.datamodel.Student;
+import com.cyse6225.spring2020.courseservice.service.StudentService;
+
+@Path("students")
+public class StudentResource {
+	StudentService studentService = new StudentService();
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Student> getStudents() {
+		return studentService.getAllStudents();
+		
+	}
+
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Student addStudent(Student student) {
+		studentService.addStudent(student.getStudentId(), student.getName(), student.getEmail(), student.getProgram());
+		return student;
+	}
+	
+	
+	
+	// get student by id
+	// get student by program
+	// get course list for student
+
+	// add student
+	// delete student
+	// update student
+
+}

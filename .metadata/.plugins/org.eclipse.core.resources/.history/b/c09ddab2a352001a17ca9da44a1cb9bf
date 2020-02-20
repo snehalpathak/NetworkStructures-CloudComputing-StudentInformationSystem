@@ -1,0 +1,14 @@
+package com.cyse6225.spring2020.courseservice.resources;
+
+public class StudentResource {
+	
+	//get all students
+	//get student by id
+	//get student by program
+	//get course list for student
+	
+	//add student
+	//delete student
+	//update student
+	
+}

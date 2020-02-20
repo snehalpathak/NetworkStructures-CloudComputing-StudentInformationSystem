@@ -1,0 +1,69 @@
+package com.cyse6225.spring2020.courseservice.datamodel;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class InMemoryDatabase {
+
+	private static HashMap<String, Professor> professorDB = new HashMap<> ();
+	private static HashMap<String, Student> studentDB = new HashMap<> ();
+	private static HashMap<String, Program> programDB = new HashMap<> ();
+	private static HashMap<String, Course> courseDB = new HashMap<> ();
+	private static HashMap<String, Lecture> lectureDB = new HashMap<> ();
+	private static List<CourseRegistration> registrationDB = new ArrayList<CourseRegistration>();
+	
+	public static HashMap<String, Professor> getProfessorDB() {
+		setProfData();
+		return professorDB;
+	}
+	
+	private static void setProfData() {
+		professorDB.put("1", new Professor("1", "Snehal","Pathak","msis","09-10-1993"));
+		professorDB.put("2", new Professor("2", "Neeraj","Patil","cs","09-10-1993"));
+		professorDB.put("3", new Professor("3", "Swapnil","Pathak","civil","09-10-1993"));
+	}
+
+	public static HashMap<String, Student> getStudentDB() {
+		setStudentDB();
+		return studentDB;
+	}
+
+	private static void setStudentDB() {
+		studentDB.put("1", new Student("1", "Juile Bowman", "xyz@gmail.com", "msis"));
+		//studentDB.put("2", new Student("2", "Jack Spence", "abc@gmail.com", "msis"));
+		//studentDB.put("3", new Student("3", "Emily Ro", "rome@gmail.com", "cs"));
+	}
+
+	public static HashMap<String, Program> getProgramDB() {
+		setProgramDB();
+		return programDB;
+	}
+
+	private static void setProgramDB() {
+	}
+
+	public static HashMap<String, Course> getCourseDB() {
+		setCourseDB();
+		return courseDB;
+	}
+
+	private static void setCourseDB() {
+	}
+
+	public static HashMap<String, Lecture> getLectureDB() {
+		setLectureDB();
+		return lectureDB;
+	}
+
+	private static void setLectureDB() {
+	}
+
+	public static List<CourseRegistration> getRegistrationDB() {
+		setRegistrationDB();
+		return registrationDB;
+	}
+
+	private static void setRegistrationDB() {
+	}	
+}

@@ -1,0 +1,17 @@
+package com.cyse6225.spring2020.courseservice.datamodel;
+
+public class Program {
+	
+	private String programId;
+	private String programName;
+	private String courseId;
+
+	public Program(String programId, String programName, String courseId) {
+		super();
+		this.programId = programId;
+		this.programName = programName;
+		this.courseId = courseId;
+	}
+
+		
+}

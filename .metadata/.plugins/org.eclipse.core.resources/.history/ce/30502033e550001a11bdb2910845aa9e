@@ -1,0 +1,46 @@
+package com.cyse6225.spring2020.courseservice.datamodel;
+
+import java.util.List;
+
+public class Course {
+	private String courseId;
+	private String courseName;
+	private Lecture lecture;
+	private List<Student> students;
+	private Professor professor;
+	private Student courseTA;
+	
+	public Course(String courseId, String courseName, Lecture lecture, String board, List<Student> students,
+			Professor professor, Student courseTa) {
+		this.courseId = courseId;
+		this.courseName = courseName;
+		this.lecture = lecture;
+		this.students = students;
+		this.professor = professor;
+		this.courseTA = courseTa; 
+	}
+
+	public String getCourseId() {
+		return courseId;
+	}
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public Lecture getLecture() {
+		return lecture;
+	}
+
+	public String getBoard() {
+		return board;
+	}
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public Professor getProfessor() {
+		return professor;
+	}	
+}

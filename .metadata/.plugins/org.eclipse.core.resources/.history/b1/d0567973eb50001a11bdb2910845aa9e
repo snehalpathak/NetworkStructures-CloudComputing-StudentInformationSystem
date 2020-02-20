@@ -1,0 +1,5 @@
+package com.cyse6225.spring2020.courseservice.datamodel;
+
+public class CourseRegistration {
+
+}

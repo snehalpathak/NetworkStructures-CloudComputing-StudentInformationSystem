@@ -1,0 +1,51 @@
+package com.cyse6225.spring2020.courseservice.datamodel;
+
+public class Lecture {
+	
+	private String lectureId;
+	private String classroom;
+	private Lecture lecture;
+	private String board;
+	private String assignments;
+	private String studyMaterials;
+	private Professor professor;
+	
+	public Lecture(String lectureId, String classroom, Lecture lecture, String board, String assignments,
+			String studyMaterials, Professor professor) {
+		this.lectureId = lectureId;
+		this.classroom = classroom;
+		this.lecture = lecture;
+		this.board = board;
+		this.assignments = assignments;
+		this.studyMaterials = studyMaterials;
+		this.professor = professor;
+	}
+
+	public String getLectureId() {
+		return lectureId;
+	}
+
+	public String getClassroom() {
+		return classroom;
+	}
+
+	public Lecture getLecture() {
+		return lecture;
+	}
+
+	public String getBoard() {
+		return board;
+	}
+
+	public String getAssignments() {
+		return assignments;
+	}
+
+	public String getStudyMaterials() {
+		return studyMaterials;
+	}
+
+	public Professor getProfessor() {
+		return professor;
+	}	
+}

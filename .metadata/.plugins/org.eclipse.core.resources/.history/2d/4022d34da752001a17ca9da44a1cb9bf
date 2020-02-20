@@ -1,0 +1,30 @@
+package com.cyse6225.spring2020.courseservice.datamodel;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class String {
+	
+	private String programId;
+	private String programName;
+	private List<Course> courses = new ArrayList<Course>();
+
+	public String(String programId, String programName, List<Course> courses) {
+		super();
+		this.programId = programId;
+		this.programName = programName;
+		this.courses = courses;
+	}
+
+	public String getProgramId() {
+		return programId;
+	}
+
+	public String getProgramName() {
+		return programName;
+	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}	
+}

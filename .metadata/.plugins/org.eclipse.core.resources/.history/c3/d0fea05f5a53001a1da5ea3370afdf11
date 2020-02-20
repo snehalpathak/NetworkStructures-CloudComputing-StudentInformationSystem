@@ -1,0 +1,57 @@
+package com.cyse6225.spring2020.courseservice.resources;
+
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import com.cyse6225.spring2020.courseservice.datamodel.Lecture;
+import com.cyse6225.spring2020.courseservice.service.LectureService;
+
+@Path("lectures")
+public class LectureResourse {
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Lecture> getAllLectures() {
+		return LectureService.getInstance().getAllLecture();
+	}
+
+	@GET
+	@Path("{lectureId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Lecture getLecturebyId(@PathParam("lectureId") String lectId) {
+		return LectureService.getInstance().getLecturebyId(lectId);
+	}
+
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Lecture addLecture(Lecture lect) {
+		LectureService.getInstance().addLecture(lect);
+		return lect;
+	}
+
+	@DELETE
+	@Path("{lectureId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Lecture deleteLecture(@PathParam("lectureId") String lectId) {
+		return LectureService.getInstance().deleteLecture(lectId);
+	}
+
+	@PUT
+	@Path("{lectureId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Lecture updateLecture(@PathParam("lectureId") String lectureId, Lecture lect) {
+		return LectureService.getInstance().updateLecture(lectureId, lect);
+	}
+
+}

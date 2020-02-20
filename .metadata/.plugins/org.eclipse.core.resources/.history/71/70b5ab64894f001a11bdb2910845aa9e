@@ -1,0 +1,20 @@
+package com.cyse6225.spring2020.courseservice.datamodel;
+
+public class Lecture {
+	
+	private String lectureId;
+	private String courseName;
+	private Lecture lecture;
+	private String board;
+	private Professor professor;
+	
+	public Lecture(String lectureId, String courseName, Lecture lecture, String board, Professor professor) {
+		this.lectureId = lectureId;
+		this.courseName = courseName;
+		this.lecture = lecture;
+		this.board = board;
+		this.professor = professor;
+	}
+	
+	
+}

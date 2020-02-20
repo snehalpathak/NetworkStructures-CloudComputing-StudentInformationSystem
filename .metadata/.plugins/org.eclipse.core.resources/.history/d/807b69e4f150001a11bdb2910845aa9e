@@ -1,0 +1,55 @@
+package com.cyse6225.spring2020.courseservice.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.cyse6225.spring2020.courseservice.datamodel.CourseRegistration;
+import com.cyse6225.spring2020.courseservice.datamodel.InMemoryDatabase;
+
+public class CourseRegistrationService {
+
+	private static List<CourseRegistration> courseRegstrList = InMemoryDatabase.getRegistrationDB();
+
+	// add course
+	public void registerCourse(String studentId, String courseId) {
+		CourseRegistration registerObj = new CourseRegistration(studentId, courseId);
+		courseRegstrList.add(registerObj);
+	}
+
+	// delete course
+	public void deregisterCourse(String studentId, String courseId) {
+		if(!studentId.isEmpty() && !courseId.isEmpty()) {
+			for(int count =0; count < courseRegstrList.size(); count++) {
+				if(courseRegstrList.get(count).getStudentId() == studentId &&
+						courseRegstrList.get(count).getCourseId() == courseId) {
+					
+					courseRegstrList.remove(count);
+				}
+			}
+		}
+	}
+	
+	// get student for course
+	public List<String> getStudentsEntrolledForCourse(String courseId){
+		List<String> studentList = new ArrayList<String>();
+		
+		for(CourseRegistration course : courseRegstrList) {
+			if(course.getCourseId().equals(courseId)) {
+				studentList.add(course.getStudentId());
+			}
+		}		
+		return studentList;
+	}
+	
+	// get course for student
+	public List<String> getCourseListForStudent(String studentId){
+		List<String> courseList = new ArrayList<String>();
+		
+		for(CourseRegistration course : courseRegstrList) {
+			if(course.getStudentId().equals(studentId)) {
+				courseList.add(course.getCourseId());
+			}
+		}		
+		return courseList;
+	}
+}

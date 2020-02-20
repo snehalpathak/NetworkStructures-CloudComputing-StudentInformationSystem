@@ -1,0 +1,23 @@
+package com.cyse6225.spring2020.courseservice.datamodel;
+
+public class CourseRegistration {
+
+	private String studentId;
+	private String courseId;
+	
+	
+	public CourseRegistration(String studentId, String courseId) {
+		this.studentId = studentId;
+		this.courseId = courseId;
+	}
+
+	public String getStudentId() {
+		return studentId;
+	}
+
+
+	public String getCourseId() {
+		return courseId;
+	}
+	
+}

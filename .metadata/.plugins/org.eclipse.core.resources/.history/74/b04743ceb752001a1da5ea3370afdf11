@@ -1,0 +1,95 @@
+package com.cyse6225.spring2020.courseservice.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+
+import com.cyse6225.spring2020.courseservice.datamodel.Course;
+import com.cyse6225.spring2020.courseservice.datamodel.InMemoryDatabase;
+import com.cyse6225.spring2020.courseservice.datamodel.Student;
+
+public class StudentService {
+
+	private static HashMap<String, Student> studentMap = InMemoryDatabase.getStudentDB();
+	private static StudentService _instance;
+
+	public static StudentService getInstance() {
+		if (_instance == null) {
+			_instance = new StudentService();
+		}
+		return _instance;
+	}
+
+	public void addStudent(String studentId, String name, String email, String program) {
+		Student newStudent = new Student(studentId, name, email, program);
+		studentMap.put(studentId, newStudent);
+	}
+
+	public void deleteStudent(String studentId) {
+		studentMap.remove(studentId);
+	}
+
+	public void registerForCourse(String studentId, String courseId) {
+		CourseRegistrationService.getInstance().registerCourse(studentId, courseId);
+	}
+
+	public void unregisterCourse(String studentId, String courseId) {
+		CourseRegistrationService.getInstance().deregisterCourse(studentId, courseId);
+	}
+
+	public Student getStudentById(String id) {
+		return studentMap.get(id);
+	}
+	
+	public List<Student> getAllStudents(){
+		ArrayList<Student> list = new ArrayList<>();
+		for (Student student : studentMap.values()) {
+			list.add(student);
+		}
+		return list ;
+	}
+
+	public List<Student> getStudentbyProgram(String programName) {
+		List<Student> studentList = new ArrayList<Student>();
+		for (Entry<String, Student> student : studentMap.entrySet()) {
+			if (student.getValue().getProgram().equals(programName)) {
+				studentList.add(student.getValue());
+			}
+		}
+		return studentList;
+	}
+
+	public Student updateStudent(String id, Student student) {
+		studentMap.put(id, student);
+		Student modifiedStudent = studentMap.get(id);
+		return modifiedStudent;		
+	}
+
+	public HashMap<String, Student> getStudentMap() {
+		return studentMap;
+	}
+
+	// get course list for student
+	public List<String> getCourseListForStudent(String studentName) {
+		List<String> courseNameList = new ArrayList<String>();
+		HashMap<String,Course> courseMap = CourseService.getInstance().getCourseMap();
+		List<String> courseIdList = CourseRegistrationService.getInstance().getCourseListForStudent(studentName);
+		
+		for(String id : courseIdList) {
+			courseNameList.add(courseMap.get(id).getCourseName());
+		}		
+		return courseNameList;
+	}
+
+	public String getIdbyStudentName(String studentName) {
+		if (!studentName.isEmpty()) {
+			for (Entry<String, Student> student : studentMap.entrySet()) {
+				if (student.getValue().getName().equals(studentName)) {
+					return student.getKey();
+				}
+			}
+		}
+		return null;
+	}
+}

@@ -1,0 +1,21 @@
+package com.cyse6225.spring2020.courseservice.service;
+
+import java.util.HashMap;
+
+import com.cyse6225.spring2020.courseservice.datamodel.InMemoryDatabase;
+import com.cyse6225.spring2020.courseservice.datamodel.Program;
+
+public class ProgramService {
+	
+	private static HashMap<String, Program> programMap = InMemoryDatabase.getProgramDB();
+	
+	
+	
+	
+	
+	
+	
+	//get all programs
+	//get all courses for a program
+	
+}

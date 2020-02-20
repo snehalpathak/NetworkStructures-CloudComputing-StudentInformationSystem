@@ -1,0 +1,65 @@
+package com.cyse6225.spring2020.courseservice.datamodel;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Student {
+
+	private String studentId;
+	private String firstName;
+	private String lastName;
+	private Program program;
+	private List<Course> courses;
+
+	public Student() {
+		courses = new ArrayList<Course>();
+	}
+
+	public Student(String studentId, String firstName, String lastName, Program program, List<Course> courses) {
+		this.studentId = studentId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.program = program;
+		this.courses = courses;
+	}
+
+	public String getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Program getProgram() {
+		return program;
+	}
+
+	public void setProgram(Program program) {
+		this.program = program;
+	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
+}

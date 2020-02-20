@@ -1,0 +1,22 @@
+package com.cyse6225.spring2020.courseservice.datamodel;
+
+import java.util.HashMap;
+
+import com.cyse6225.spring2020.courseservice.datamodel.Professor;
+
+public class InMemoryDatabase {
+
+	private static HashMap<String, Professor> professorDB = new HashMap<> ();
+	
+	
+	public static HashMap<String, Professor> getProfessorDB() {
+		setProfData();
+		return professorDB;
+	}
+	
+	private static void setProfData() {
+		professorDB.put("1", new Professor("1", "Snehal","Pathak","MSIS","09-10-1993"));
+		professorDB.put("2", new Professor("2", "Neeraj","Patil","CS","09-10-1993"));
+		professorDB.put("3", new Professor("3", "Swapnil","Pathak","ELEC","09-10-1993"));
+	}
+}

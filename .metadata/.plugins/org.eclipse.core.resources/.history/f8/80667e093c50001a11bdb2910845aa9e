@@ -1,0 +1,8 @@
+package com.cyse6225.spring2020.courseservice.service;
+
+public class ProgramService {
+	
+	//get all programs
+	//get all courses for a program
+	
+}

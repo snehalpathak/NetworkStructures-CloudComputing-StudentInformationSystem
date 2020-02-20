@@ -1,0 +1,73 @@
+package com.cyse6225.spring2020.courseservice.datamodel;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class InMemoryDatabase {
+
+	private static HashMap<String, Professor> professorDB = new HashMap<> ();
+	private static HashMap<String, Student> studentDB = new HashMap<> ();
+	private static HashMap<String, Program> programDB = new HashMap<> ();
+	private static HashMap<String, Course> courseDB = new HashMap<> ();
+	private static HashMap<String, Lecture> lectureDB = new HashMap<> ();
+	
+	public static HashMap<String, Professor> getProfessorDB() {
+		setProfData();
+		return professorDB;
+	}
+	
+	private static void setProfData() {
+		professorDB.put("201", new Professor("201", "Lizze","Bow","MSIS","09-10-1993"));
+		professorDB.put("202", new Professor("202", "Jossie","Pam","MSCS","09-10-1993"));
+		professorDB.put("203", new Professor("203", "Hope","Mikel","MSCS","09-10-1993"));
+	}
+
+	public static HashMap<String, Student> getStudentDB() {
+		setStudentDB();
+		return studentDB;
+	}
+
+	private static void setStudentDB() {
+		List<String> courseList = new ArrayList<String>();
+		courseList.add("6225");
+		courseList.add("5100");
+		studentDB.put("501", new Student("501", "Juile Bowman", "xyz@gmail.com", "1001", courseList));
+		studentDB.put("502", new Student("502", "Jack Spence", "abc@gmail.com", "1000", courseList));
+		studentDB.put("503", new Student("503", "Emily Ro", "rome@gmail.com", "1001", courseList));
+	}
+
+	public static HashMap<String, Program> getProgramDB() {
+		setProgramDB();
+		return programDB;
+	}
+
+	private static void setProgramDB() {
+		List<String> courseList = new ArrayList<String>();
+		courseList.add("6225");
+		courseList.add("5100");
+		programDB.put("1000", new Program("1000", "MSIS", courseList));
+		programDB.put("1001", new Program("1001", "MSCS", courseList));
+	}
+
+	public static HashMap<String, Course> getCourseDB() {
+		setCourseDB();
+		return courseDB;
+	}
+
+	private static void setCourseDB() {
+		courseDB.put("6225", new Course("6225","WebTools","101","202","501"));
+		courseDB.put("5100", new Course("5100","Cloud-Computing","102","201","503"));
+		
+	}
+
+	public static HashMap<String, Lecture> getLectureDB() {
+		setLectureDB();
+		return lectureDB;
+	}
+
+	private static void setLectureDB() {
+		lectureDB.put("101", new Lecture("101", "San Juan", "Test", "Test"));
+		lectureDB.put("102", new Lecture("102", "Stuart", "Test", "Test"));
+	}	
+}

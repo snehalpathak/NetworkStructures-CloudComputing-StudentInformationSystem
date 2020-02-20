@@ -1,0 +1,29 @@
+package com.cyse6225.spring2020.courseservice.resources;
+
+import java.util.List;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+
+import com.cyse6225.spring2020.courseservice.datamodel.Student;
+import com.cyse6225.spring2020.courseservice.service.StudentService;
+
+@Path("students")
+public class StudentResource {
+	
+	/*
+	 * get all students
+	 */
+	@GET
+	public List<Student> getAllStudents() {
+		return StudentService.getInstance().getAllStudents();
+	}
+	//get student by id
+	//get student by program
+	//get course list for student
+	
+	//add student
+	//delete student
+	//update student
+	
+}

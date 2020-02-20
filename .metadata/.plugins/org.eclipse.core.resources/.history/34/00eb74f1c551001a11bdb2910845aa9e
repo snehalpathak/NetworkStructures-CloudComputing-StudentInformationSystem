@@ -1,0 +1,71 @@
+package com.cyse6225.spring2020.courseservice.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+
+import com.cyse6225.spring2020.courseservice.datamodel.Course;
+import com.cyse6225.spring2020.courseservice.datamodel.InMemoryDatabase;
+import com.cyse6225.spring2020.courseservice.datamodel.Lecture;
+import com.cyse6225.spring2020.courseservice.datamodel.Professor;
+import com.cyse6225.spring2020.courseservice.datamodel.Student;
+
+public class CourseService {
+	
+	private static HashMap<String, Course> courseMap = InMemoryDatabase.getCourseDB();
+	private static CourseService _instance;
+	
+	public static CourseService getInstance() {
+		if(_instance == null) {
+			_instance = new CourseService();
+		}
+		return _instance;
+	}
+	
+	//add course
+	public void addCourse(String courseId, String courseName, Lecture lecture, Professor professor, Student courseTa) {
+		courseMap.put(courseId, new Course(courseId, courseName, lecture, professor, courseTa));
+	}
+	
+	//delete course
+	public void deleteCourse(String courseName) {
+		if(!courseName.isEmpty()) {
+			String courseId = getIdbyCourseName(courseName);
+			courseMap.remove(courseId);
+		}
+	}
+	
+	//get students enrolled in course
+	public List<String> getStudentFromCourse(String courseName) {
+		List<String> studentNameList = new ArrayList<String>();
+		List<String> studentIdList = CourseRegistrationService.getInstance().getStudentsEntrolledForCourse(courseName);
+		HashMap<String, Student> studentMap = StudentService.getInstance().getStudentMap();
+		
+		for (String id : studentIdList) {
+			studentNameList.add(studentMap.get(id).getName());
+		}
+		return studentNameList;
+	}
+	
+	//get professor for course
+	//get lecture details for course
+	//get TA for course
+	
+	
+	public String getIdbyCourseName(String courseName) {
+		if(!courseName.isEmpty()) {
+			for(Entry<String, Course> course : courseMap.entrySet()) {
+				if(course.getValue().getCourseName().equals(courseName)) {
+					return course.getKey();
+				}
+			}
+		}
+		return null;
+	}
+
+	public HashMap<String, Course> getCourseMap() {
+		return courseMap;
+	}
+		
+}

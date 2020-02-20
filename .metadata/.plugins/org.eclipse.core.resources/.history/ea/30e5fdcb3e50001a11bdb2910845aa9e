@@ -1,0 +1,28 @@
+package com.cyse6225.spring2020.courseservice.service;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.cyse6225.spring2020.courseservice.datamodel.Course;
+import com.cyse6225.spring2020.courseservice.datamodel.InMemoryDatabase;
+import com.cyse6225.spring2020.courseservice.datamodel.Program;
+
+public class ProgramService {
+	
+	private static HashMap<String, Program> programMap = InMemoryDatabase.getProgramDB();
+	
+	public void addProgram(String progId, String progName, List<Course> course) {
+		Program newProg = new Program(progId, progName, course);
+		programMap.put(progId, newProg);
+	}
+	
+	public void deleteProgram(String progId) {
+		programMap.remove(progId);
+	}
+	
+	
+	
+	//get all programs
+	//get all courses for a program
+	
+}

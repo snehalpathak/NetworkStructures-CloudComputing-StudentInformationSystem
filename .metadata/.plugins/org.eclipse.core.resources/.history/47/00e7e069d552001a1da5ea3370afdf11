@@ -1,0 +1,25 @@
+package com.cyse6225.spring2020.courseservice.datamodel;
+
+import java.util.List;
+
+public class Student {
+
+	private String studentId;
+	private String name;
+	private String email;
+	private String programId;
+	private List<String> courseId;
+	
+	public Student() {
+		
+	}
+	
+	
+	
+	@Override
+	public String toString() {
+		return "studentId=" + studentId + ", name=" + name + ", email=" + email + ", programId=" + programId
+				+ ", courseId=" + courseId;
+	}
+	
+}

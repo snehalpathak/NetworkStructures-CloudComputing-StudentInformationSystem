@@ -1,0 +1,18 @@
+package com.cyse6225.spring2020.courseservice.service;
+
+import java.util.List;
+
+import com.cyse6225.spring2020.courseservice.datamodel.CourseRegistration;
+import com.cyse6225.spring2020.courseservice.datamodel.InMemoryDatabase;
+
+public class CourseRegistrationService {
+	
+	private static List<CourseRegistration> courseRegistrationList = InMemoryDatabase.getRegistrationDB();
+	
+	//add course
+	
+	//delete course
+	//update course
+	//get student for course
+	//get course for student
+}

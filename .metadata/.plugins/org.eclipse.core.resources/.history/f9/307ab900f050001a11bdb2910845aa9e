@@ -1,0 +1,31 @@
+package com.cyse6225.spring2020.courseservice.service;
+
+import java.util.List;
+
+import com.cyse6225.spring2020.courseservice.datamodel.CourseRegistration;
+import com.cyse6225.spring2020.courseservice.datamodel.InMemoryDatabase;
+
+public class CourseRegistrationService {
+
+	private static List<CourseRegistration> courseRegistrationList = InMemoryDatabase.getRegistrationDB();
+
+	// add course
+	public void registerCourse(String studentId, String courseId) {
+		CourseRegistration registerObj = new CourseRegistration(studentId, courseId);
+		courseRegistrationList.add(registerObj);
+	}
+
+	// delete course
+	public void deregisterCourse(String studentId, String courseId) {
+		if(!studentId.isEmpty() && !courseId.isEmpty()) {
+			for(int count =0; count < courseRegistrationList.size(); count++) {
+				if(course.getStudentId() == studentId && course.getCourseId() == courseId) {
+					
+				}
+			}
+		}
+	}
+	// update course
+	// get student for course
+	// get course for student
+}

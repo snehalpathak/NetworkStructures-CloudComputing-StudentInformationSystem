@@ -1,0 +1,60 @@
+package com.cyse6225.spring2020.courseservice.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+
+import com.cyse6225.spring2020.courseservice.datamodel.Course;
+import com.cyse6225.spring2020.courseservice.datamodel.InMemoryDatabase;
+import com.cyse6225.spring2020.courseservice.datamodel.Program;
+import com.cyse6225.spring2020.courseservice.datamodel.Student;
+
+public class StudentService {
+	
+	private static HashMap<String, Student> studentMap = InMemoryDatabase.getStudentDB();
+	
+	
+	public StudentService() {
+		
+	}
+	
+	public void addStudent(String studentId, String firstName, String lastName, Program program, List<Course> courses) {
+		Student newStudent = new Student(studentId, firstName, lastName, program, courses);
+		studentMap.put(studentId, newStudent);
+	}
+	
+	public void deleteStudent(String studentId) {
+		studentMap.remove(studentId);
+	}
+	
+	public Student getStudentById(String id) {
+		return studentMap.get(id);
+	}
+	
+	public List<Student> getStudentbyProgramName(String programName) {
+		List<Student> studentList = new ArrayList<Student>();
+			
+		
+		return studentList;
+	}
+	
+	/*
+	 * Search student by id
+	 * return its key
+	 */
+	private String searchStudent(String studentId) {
+		for(Entry<String, Student> entry : studentMap.entrySet()) {
+			if(entry.getValue().getStudentId() == studentId) {
+				return entry.getKey();
+			}
+		}
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+}

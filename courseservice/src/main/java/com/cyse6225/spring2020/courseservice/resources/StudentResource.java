@@ -14,7 +14,6 @@ import javax.ws.rs.core.MediaType;
 
 import com.cyse6225.spring2020.courseservice.datamodel.Course;
 import com.cyse6225.spring2020.courseservice.datamodel.Student;
-import com.cyse6225.spring2020.courseservice.service.CourseService;
 import com.cyse6225.spring2020.courseservice.service.StudentService;
 
 @Path("students")
@@ -29,7 +28,6 @@ public class StudentResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Student addStudent(Student student) {
-		System.out.println(student);
 		StudentService.getInstance().addStudent(student.getStudentId(), student.getName(), student.getEmail(), student.getProgramId(),
 				student.getCourseId());
 		return student;
@@ -60,8 +58,7 @@ public class StudentResource {
 	@Path("{studentId}/course")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Course> getCourseListForStudent(@PathParam("studentId") String studentId) {
-		List<String> list = StudentService.getInstance().getCourseListForStudent(studentId);
-		return CourseService.getInstance().getCoursesByCourseId(list);
+		return StudentService.getInstance().getCourseListForStudent(studentId);
 	}
 
 	// delete student

@@ -22,7 +22,6 @@ public class ProgramService {
 	
 	public void addProgram(String progId, String progName, List<String> courseId) {
 		Program newProg = new Program(progId, progName, courseId);
-		System.out.println(newProg);
 		programMap.put(progId, newProg);
 	}
 	

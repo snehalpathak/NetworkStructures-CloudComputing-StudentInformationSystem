@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.cyse6225.spring2020.courseservice.datamodel.Course;
 import com.cyse6225.spring2020.courseservice.datamodel.InMemoryDatabase;
 import com.cyse6225.spring2020.courseservice.datamodel.Student;
 
@@ -22,7 +23,6 @@ public class StudentService {
 
 	public void addStudent(String studentId, String name, String email, String program, List<String> courseId) {
 		Student newStudent = new Student(studentId, name, email, program, courseId);
-		System.out.println(newStudent);
 		studentMap.put(studentId, newStudent);
 	}
 
@@ -61,7 +61,7 @@ public class StudentService {
 	}
 
 	// get course list for student
-	public List<String> getCourseListForStudent(String studentId) {
+	public List<Course> getCourseListForStudent(String studentId) {
 		List<String> courseList = new ArrayList<>();
 
 		for (Student student : studentMap.values()) {
@@ -69,6 +69,6 @@ public class StudentService {
 				courseList = student.getCourseId();
 			}
 		}
-		return courseList;
+		return CourseService.getInstance().getCoursesByCourseId(courseList);
 	}
 }

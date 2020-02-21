@@ -43,9 +43,6 @@ public class ProfessorService {
 	// Getting One Professor
 	public Professor getProfessor(String profId) {
 		 Professor getProfDetails = prof_Map.get(profId);
-	     System.out.println("Item retrieved:");
-	     System.out.println(getProfDetails.toString());
-		
 		return getProfDetails;
 	}
 	
@@ -75,7 +72,4 @@ public class ProfessorService {
 		}
 		return list ;
 	}
-	
-	// Get professors for a year with a size limit
-	
 }

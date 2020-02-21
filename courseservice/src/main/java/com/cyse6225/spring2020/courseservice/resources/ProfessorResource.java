@@ -50,7 +50,6 @@ public class ProfessorResource {
 	@Path("id/{professorId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Professor getProfessor(@PathParam("professorId") String profId) {
-		System.out.println("Professor Resource: Looking for: " + profId);
 		return ProfessorService.getInstance().getProfessor(profId);
 	}
 

@@ -84,7 +84,6 @@ public class CourseService {
 		for (String courseId : courseIds) {
 			courses.add(courseMap.get(courseId));
 		}
-		System.out.println(courses);
 		return courses;
 	}
 }

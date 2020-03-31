@@ -1,5 +1,11 @@
 package com.cyse6225.spring2020.courseservice.datamodel;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+
+@DynamoDBTable(tableName="course")
 public class Course {
 	private String courseId;
 	private String courseName;
@@ -19,6 +25,7 @@ public class Course {
 		this.courseTA = courseTa; 
 	}
 
+	@DynamoDBHashKey(attributeName="courseId")
 	public String getCourseId() {
 		return courseId;
 	}
@@ -27,6 +34,7 @@ public class Course {
 		this.courseId = courseId;
 	}
 
+	@DynamoDBAttribute(attributeName="courseName")
 	public String getCourseName() {
 		return courseName;
 	}
@@ -35,6 +43,7 @@ public class Course {
 		this.courseName = courseName;
 	}
 
+	@DynamoDBAttribute(attributeName="lectureId")
 	public String getLectureId() {
 		return lectureId;
 	}
@@ -43,6 +52,7 @@ public class Course {
 		this.lectureId = lectureId;
 	}
 
+	@DynamoDBAttribute(attributeName="professorId")
 	public String getProfessorId() {
 		return professorId;
 	}
@@ -51,6 +61,7 @@ public class Course {
 		this.professorId = professorId;
 	}
 
+	@DynamoDBAttribute(attributeName="courseTA")
 	public String getCourseTA() {
 		return courseTA;
 	}
@@ -59,6 +70,7 @@ public class Course {
 		this.courseTA = courseTA;
 	}
 
+	@DynamoDBIgnore
 	@Override
 	public String toString() {
 		return "courseId=" + courseId + ", courseName=" + courseName + ", lectureId=" + lectureId

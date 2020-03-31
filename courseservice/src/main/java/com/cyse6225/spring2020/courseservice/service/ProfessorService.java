@@ -1,75 +1,100 @@
 package com.cyse6225.spring2020.courseservice.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.cyse6225.spring2020.courseservice.datamodel.InMemoryDatabase;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.cyse6225.spring2020.courseservice.datamodel.DynamoDbConnector;
 import com.cyse6225.spring2020.courseservice.datamodel.Professor;
+import com.cyse6225.spring2020.courseservice.exception.DataNotFoundException;
 
 public class ProfessorService {
-	
-	private static HashMap<String, Professor> prof_Map = InMemoryDatabase.getProfessorDB();
+
 	private static ProfessorService instance;
-	
+	static DynamoDbConnector dynamoDb;
+	DynamoDBMapper mapper;
+
 	public static ProfessorService getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new ProfessorService();
 		}
 		return instance;
 	}
-	
-	// Getting a list of all professor 
-	// GET "..webapi/professors"
-	public List<Professor> getAllProfessors() {	
-		//Getting the list
-		ArrayList<Professor> list = new ArrayList<>();
-		for (Professor prof : prof_Map.values()) {
-			list.add(prof);
+
+	public ProfessorService() {
+		dynamoDb = new DynamoDbConnector();
+		dynamoDb.init();
+		mapper = new DynamoDBMapper(dynamoDb.getClient());
+	}
+
+	// Getting a list of all professor
+	public List<Professor> getAllProfessors() {
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+		List<Professor> profList = mapper.scan(Professor.class, scanExpression);
+		if(profList == null) {
+			throw new DataNotFoundException(" Professor details not found");
 		}
-		return list ;
+		return profList;
 	}
 
 	// Adding a professor
-	public void addProfessor(String professorId, String firstName, String lastName, String department, String joiningDate) {
-		//Create a Professor Object
-		Professor prof = new Professor(professorId, firstName , lastName, 
-				department, joiningDate.toString());
+	public void addProfessor(String firstName, String lastName, String department,
+			String joiningDate) {	
 		
-		prof_Map.put(professorId, prof);
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+		Integer count = mapper.count(Professor.class, scanExpression) + 1;
+		String professorId = count.toString();
+		// Create a Professor Object
+		Professor prof = new Professor(professorId, firstName, lastName, department, joiningDate.toString());
+		mapper.save(prof);
 	}
-	
-	
+
 	// Getting One Professor
 	public Professor getProfessor(String profId) {
-		 Professor getProfDetails = prof_Map.get(profId);
-		return getProfDetails;
+		Professor profDetails = mapper.load(Professor.class, profId);
+		if(profDetails == null) {
+			throw new DataNotFoundException(" Professor details with id '"+ profId +"' not found");
+		}
+		return profDetails;
 	}
-	
+
 	// Deleting a professor
 	public Professor deleteProfessor(String profId) {
-		Professor deletedProfDetails = prof_Map.get(profId);
-		prof_Map.remove(profId);
+		Professor deletedProfDetails = mapper.load(Professor.class, profId);
+		if(deletedProfDetails == null) {
+			throw new DataNotFoundException(" Professor details with id '"+ profId +"' not found");
+		}
+		mapper.delete(deletedProfDetails);
 		return deletedProfDetails;
 	}
-	
+
 	// Updating Professor Info
-	public Professor updateProfessorInformation(String profId, Professor prof) {	
-		if(prof_Map.containsKey(profId)) {
-			prof_Map.put(profId, prof);
+	public Professor updateProfessorInformation(String profId, Professor prof) {
+		Professor oldProf = mapper.load(Professor.class, profId);
+		if (oldProf != null) {
+			prof.setProfessorId(profId);
+			mapper.save(prof);
+			return prof;
+		}else {
+			throw new DataNotFoundException(" Professor details with id '"+ profId +"' not found");
 		}
-		return prof;
 	}
-	
-	// Get professors in a department 
-	public List<Professor> getProfessorsByDepartment(String department) {	
-		//Getting the list
-		ArrayList<Professor> list = new ArrayList<>();
-		for (Professor prof : prof_Map.values()) {
-			if (prof.getDepartment().equals(department)) {
-				list.add(prof);
-			}
+
+	// Get professors in a department
+	public List<Professor> getProfessorsByDepartment(String department) {
+		// Getting the list
+		HashMap<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+		eav.put(":v1", new AttributeValue().withS(department));
+
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression().withFilterExpression("department = :v1")
+				.withExpressionAttributeValues(eav);
+
+		List<Professor> profList = mapper.scan(Professor.class, scanExpression);
+		if(profList == null) {
+			throw new DataNotFoundException(" Professor details for department '"+ department +"' not found");
 		}
-		return list ;
+		return profList;
 	}
 }

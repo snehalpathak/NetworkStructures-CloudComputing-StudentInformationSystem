@@ -11,7 +11,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
 import com.cyse6225.spring2020.courseservice.datamodel.Professor;
 import com.cyse6225.spring2020.courseservice.service.ProfessorService;
 
@@ -29,7 +28,7 @@ public class ProfessorResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Professor addProfessor(Professor prof) {
-		ProfessorService.getInstance().addProfessor(prof.getProfessorId(), prof.getFirstName(), prof.getLastName(), prof.getDepartment(),
+		ProfessorService.getInstance().addProfessor(prof.getFirstName(), prof.getLastName(), prof.getDepartment(),
 				prof.getJoiningDate());
 
 		return prof;
@@ -39,7 +38,6 @@ public class ProfessorResource {
 	@Path("{department}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Professor> getProfessorsByDeparment(@PathParam("department") String department) {
-
 		if (department == null) {
 			return ProfessorService.getInstance().getAllProfessors();
 		}
@@ -64,8 +62,10 @@ public class ProfessorResource {
 	@Path("{professorId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Professor updateProfessor(@PathParam("professorId") String profId, Professor prof) {
-		return ProfessorService.getInstance().updateProfessorInformation(profId, prof);
+	public Professor updateProfessor(@PathParam("professorId") String profId, Professor prof) throws Exception {
+		Professor newProf = ProfessorService.getInstance().updateProfessorInformation(profId, prof);
+		
+		return newProf;
 	}
 
 }

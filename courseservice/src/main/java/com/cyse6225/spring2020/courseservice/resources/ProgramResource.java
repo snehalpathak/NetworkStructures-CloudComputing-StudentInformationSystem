@@ -58,7 +58,8 @@ public class ProgramResource {
 	@PUT
 	@Path("{programId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Program updateProgram(@PathParam("{programId}") String progId, Program prog) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Program updateProgram(@PathParam("programId") String progId, Program prog) {
 		return ProgramService.getInstance().updateProgram(progId, prog);
 	}
 }

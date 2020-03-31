@@ -1,5 +1,11 @@
 package com.cyse6225.spring2020.courseservice.datamodel;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+
+@DynamoDBTable(tableName="professor")
 public class Professor {
 	private String firstName;
 	private String lastName;
@@ -19,6 +25,7 @@ public class Professor {
 		this.joiningDate = joiningDate;
 	}
 
+	@DynamoDBAttribute(attributeName="firstName")
 	public String getFirstName() {
 		return firstName;
 	}
@@ -27,6 +34,16 @@ public class Professor {
 		this.firstName = firstName;
 	}
 
+	@DynamoDBAttribute(attributeName="lastName")
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	@DynamoDBAttribute(attributeName="department")
 	public String getDepartment() {
 		return department;
 	}
@@ -35,6 +52,7 @@ public class Professor {
 		this.department = department;
 	}
 
+	@DynamoDBHashKey(attributeName="professorId")
 	public String getProfessorId() {
 		return professorId;
 	}
@@ -43,6 +61,7 @@ public class Professor {
 		this.professorId = professorId;
 	}
 
+	@DynamoDBAttribute(attributeName="joiningDate")
 	public String getJoiningDate() {
 		return joiningDate;
 	}
@@ -51,17 +70,10 @@ public class Professor {
 		this.joiningDate = joiningDate;
 	}
 
+	@DynamoDBIgnore
 	@Override
 	public String toString() {
-		return "ProfId=" + getProfessorId() + ", firstName=" + getFirstName() + ", department=" + getDepartment()
+		return "ProfessorId=" + getProfessorId() + ", firstName=" + getFirstName() + ", lastName="+ getLastName() + ", department=" + getDepartment()
 				+ ", joiningDate=" + getJoiningDate();
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+	}	
 }

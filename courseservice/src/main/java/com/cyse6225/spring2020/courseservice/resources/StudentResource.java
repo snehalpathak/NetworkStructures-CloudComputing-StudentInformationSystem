@@ -28,7 +28,7 @@ public class StudentResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Student addStudent(Student student) {
-		StudentService.getInstance().addStudent(student.getStudentId(), student.getName(), student.getEmail(), student.getProgramId(),
+		StudentService.getInstance().addStudent(student.getName(), student.getEmail(), student.getProgramId(),
 				student.getCourseId());
 		return student;
 	}

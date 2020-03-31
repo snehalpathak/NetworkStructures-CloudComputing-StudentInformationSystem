@@ -2,6 +2,12 @@ package com.cyse6225.spring2020.courseservice.datamodel;
 
 import java.util.List;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+
+@DynamoDBTable(tableName="student")
 public class Student {
 
 	private String studentId;
@@ -23,6 +29,7 @@ public class Student {
 		this.courseId = courseId;
 	}
 
+	@DynamoDBHashKey(attributeName="studentId")
 	public String getStudentId() {
 		return studentId;
 	}
@@ -31,6 +38,7 @@ public class Student {
 		this.studentId = studentId;
 	}
 
+	@DynamoDBAttribute(attributeName="name")
 	public String getName() {
 		return name;
 	}
@@ -39,6 +47,7 @@ public class Student {
 		this.name = name;
 	}
 
+	@DynamoDBAttribute(attributeName="email")
 	public String getEmail() {
 		return email;
 	}
@@ -47,6 +56,7 @@ public class Student {
 		this.email = email;
 	}
 
+	@DynamoDBAttribute(attributeName="programId")
 	public String getProgramId() {
 		return programId;
 	}
@@ -55,6 +65,7 @@ public class Student {
 		this.programId = programId;
 	}
 
+	@DynamoDBAttribute(attributeName="courseId")
 	public List<String> getCourseId() {
 		return courseId;
 	}
@@ -63,6 +74,7 @@ public class Student {
 		this.courseId = courseId;
 	}
 
+	@DynamoDBIgnore
 	@Override
 	public String toString() {
 		return "studentId=" + studentId + ", name=" + name + ", email=" + email + ", programId=" + programId

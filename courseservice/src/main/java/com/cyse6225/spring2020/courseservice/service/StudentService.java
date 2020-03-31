@@ -1,19 +1,22 @@
 package com.cyse6225.spring2020.courseservice.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.cyse6225.spring2020.courseservice.datamodel.Course;
-import com.cyse6225.spring2020.courseservice.datamodel.InMemoryDatabase;
+import com.cyse6225.spring2020.courseservice.datamodel.DynamoDbConnector;
 import com.cyse6225.spring2020.courseservice.datamodel.Student;
+import com.cyse6225.spring2020.courseservice.exception.DataNotFoundException;
 
 public class StudentService {
 
-	private static HashMap<String, Student> studentMap = InMemoryDatabase.getStudentDB();
-
 	private static StudentService instance;
-
+	static DynamoDbConnector dynamoDb;
+	DynamoDBMapper mapper; 
+	
 	public static StudentService getInstance() {
 		if (instance == null) {
 			instance = new StudentService();
@@ -21,54 +24,88 @@ public class StudentService {
 		return instance;
 	}
 
-	public void addStudent(String studentId, String name, String email, String program, List<String> courseId) {
+	public StudentService() {
+		dynamoDb = new DynamoDbConnector();
+		dynamoDb.init();
+		mapper = new DynamoDBMapper(dynamoDb.getClient());
+	}
+	
+	//Add student
+	public void addStudent(String name, String email, String program, List<String> courseId) {
+		
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+		Integer count = mapper.count(Student.class, scanExpression) + 1;
+		String studentId = count.toString();
 		Student newStudent = new Student(studentId, name, email, program, courseId);
-		studentMap.put(studentId, newStudent);
+		
+		mapper.save(newStudent);
 	}
 
+	//Delete Student
 	public Student deleteStudent(String studentId) {
-		Student oldStudent = studentMap.get(studentId);
-		studentMap.remove(studentId);
+		Student oldStudent = mapper.load(Student.class, studentId);
+		if(oldStudent == null) {
+			throw new DataNotFoundException(" Student details with id '"+ studentId +"' not found");
+		}
+		mapper.delete(oldStudent);
 		return oldStudent;
 	}
 
+	//Get student by ID
 	public Student getStudentById(String id) {
-		return studentMap.get(id);
+		Student student = mapper.load(Student.class, id);
+		if(student == null) {
+			throw new DataNotFoundException(" Student details with id '"+ id +"' not found");
+		}
+		return student;
 	}
 
+	//Get all students
 	public List<Student> getAllStudents() {
-		ArrayList<Student> list = new ArrayList<>();
-		for (Student student : studentMap.values()) {
-			list.add(student);
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+		List<Student> list = mapper.scan(Student.class, scanExpression);
+		if(list == null) {
+			throw new DataNotFoundException(" Student details not found");
 		}
 		return list;
 	}
 
-	public List<Student> getStudentbyProgram(String programId) {
-		List<Student> studentList = new ArrayList<Student>();
-		for (Student student : studentMap.values()) {
-			if (student.getProgramId().equals(programId)) {
-				studentList.add(student);
-			}
+	//Get Student by Program
+	public List<Student> getStudentbyProgram(String programId) {		
+		HashMap<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+		eav.put(":v1", new AttributeValue().withS(programId));
+		
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("programId = :v1")
+			    .withExpressionAttributeValues(eav);
+		
+		List<Student> studentList = mapper.scan(Student.class, scanExpression);
+		if(studentList == null) {
+			throw new DataNotFoundException(" Student details with Program Id '"+ programId +"' not found");
 		}
 		return studentList;
 	}
 
+	//Update Student
 	public Student updateStudent(String id, Student student) {
-		studentMap.put(id, student);
-		Student modifiedStudent = studentMap.get(id);
-		return modifiedStudent;
+		Student oldStudent = mapper.load(Student.class, id);
+		if(oldStudent != null) {
+			student.setStudentId(id);
+			mapper.save(student);
+			return student;
+		}else{
+			throw new DataNotFoundException(" Student details with id '"+ id +"' not found");
+		}
 	}
 
 	// get course list for student
 	public List<Course> getCourseListForStudent(String studentId) {
-		List<String> courseList = new ArrayList<>();
-
-		for (Student student : studentMap.values()) {
-			if (student.getStudentId().equals(studentId)) {
-				courseList = student.getCourseId();
-			}
+		Student student = mapper.load(Student.class, studentId);
+		List<String> courseId = student.getCourseId();
+		List<Course> courseList = CourseService.getInstance().getCoursesByCourseId(courseId);
+		if(courseList == null) {
+			throw new DataNotFoundException(" Student details with id '"+ studentId +"' not found");
 		}
-		return CourseService.getInstance().getCoursesByCourseId(courseList);
+		return courseList;
 	}
 }

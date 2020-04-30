@@ -1,0 +1,91 @@
+{
+  "Comment": "A Hello World example of the Amazon States Language using Pass states",
+  "StartAt": "Validate Input",
+  "States": {
+    "Validate Input": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-west-2:298870452822:function:CheckCourseData",
+      "Next": "Check if New Course",
+      "ResultPath": "$.isNewCourse"
+    },
+    "Check if New Course": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.isNewCourse",
+          "BooleanEquals": true,
+          "Next": "Course Register"
+        }
+      ],
+      "Default": "End Workflow"
+    },
+    "Course Register": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-west-2:298870452822:function:RegisterCourse",
+      "ResultPath": "$.generatedCourseId",
+      "Next": "Check if Valid Department",
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "Next": "Fail"
+        }
+      ]
+    },
+    "Create Registrar Record": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-west-2:298870452822:function:RegisterRegistrar",
+      "Next": "Create Board",
+      "ResultPath": "$.registrarId"
+    },
+    "Check if Valid Department": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Or": [
+            {
+              "Variable": "$.department",
+              "StringEquals": "seminars"
+            },
+            {
+              "Variable": "$.department",
+              "StringEquals": "Seminars"
+            }
+          ],
+          "Next": "End Workflow"
+        }
+      ],
+      "Default": "Create Registrar Record"
+    },
+    "Create Board": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-west-2:298870452822:function:RegisterBoard",
+      "Next": "Send Email",
+      "ResultPath": "$.email",
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "Next": "Fail"
+        }
+      ]
+    },
+    "Send Email": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-west-2:298870452822:function:CreateSNSTopic",
+      "Next": "End Workflow"
+    },
+    "End Workflow": {
+      "Type": "Pass",
+      "Next": "Success"
+    },
+    "Success": {
+      "Type": "Succeed"
+    },
+    "Fail": {
+      "Type": "Fail"
+    }
+  }
+}

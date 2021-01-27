@@ -1,2 +1,2 @@
-- This Repository includes development of Student Information System developed with Jersey RESTful Web Services framework,Amazon DynamoDB,Lambda,Step functions
+- This Repository includes development of Student Information System developed with Jersey RESTful Web Services framework, Amazon DynamoDB, Lambda function,Step functions, SNS
 - RestFul webservices are deployed using Amazon Elastic Beanstalk
